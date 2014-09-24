@@ -77,3 +77,24 @@ great_distance(start_latitude=30, start_longitude=-74, end_latitude=[40, 45, 50]
  'distance': array([6.35648335e+07, 9.53877888e+07, 1.27238665e+08]),
  'reverse_azimuth': array([180., 180., 180.])}
 ```
+
+
+## Source
+
+Algrothims from Geocentric Datum of Australia Technical Manual
+
+http://www.anzlic.org.au/icsm/gdatum/chapter4.html (Page is no longer
+available)
+
+Computations on the Ellipsoid
+
+There are a number of formulae that are available
+to calculate accurate geodetic positions,
+azimuths and distances on the ellipsoid.
+
+Vincenty's formulae (Vincenty, 1975) may be used
+for lines ranging from a few cm to nearly 20,000 km,
+with millimetre accuracy.
+The formulae have been extensively tested
+for the Australian region, by comparison with results
+from other formulae (Rainsford, 1955 & Sodano, 1965).
