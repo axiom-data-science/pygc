@@ -8,7 +8,7 @@ def readme():
 
 reqs = [line.strip() for line in open('requirements.txt')]
 
-setup(namespace_packages = ['pygc'],
+setup(namespace_packages = [],
     name                 = "pygc",
     version              = __version__,
     description          = "Great Circle calculations in Python using Vincenty's formulae",
