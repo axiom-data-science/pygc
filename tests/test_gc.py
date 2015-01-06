@@ -1,7 +1,7 @@
-import math
 import unittest
 import numpy as np
 from pygc import great_circle
+
 
 class GreatCircleTest(unittest.TestCase):
 
