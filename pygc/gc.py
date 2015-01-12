@@ -152,6 +152,10 @@ def vinc_dist(  f,  a,  phi1,  lembda1,  phi2,  lembda2 ) :
       sigma = math.atan2( Sin_sigma, Cos_sigma )
 
       Sin_alpha = math.cos(U1) * math.cos(U2) * math.sin(lembda) / math.sin(sigma)
+      if Sin_alpha > 1 and np.allclose(Sin_alpha, 1.0):
+        Sin_alpha = 1.0
+      elif Sin_alpha < -1 and np.allclose(Sin_alpha, -1.0):
+        Sin_alpha = -1.0
       alpha = math.asin( Sin_alpha )
 
       Cos2sigma_m = math.cos(sigma) - (2 * math.sin(U1) * math.sin(U2) / pow(math.cos(alpha), 2) )
