@@ -44,7 +44,7 @@ def great_distance(**kwargs):
         start_latitude  = starting latitude, in DECIMAL DEGREES
         start_longitude = starting longitude, in DECIMAL DEGREES
         end_latitude    = ending latitude, in DECIMAL DEGREES
-        end_longitude   = ending longitude, in D|ECIMAL DEGREES
+        end_longitude   = ending longitude, in DECIMAL DEGREES
         rmajor          = radius of earth's major axis. default=6378137.0 (WGS84)
         rminor          = radius of earth's minor axis. default=6356752.3142 (WGS84)
 
@@ -69,7 +69,7 @@ def great_distance(**kwargs):
                                                  start_longitude,
                                                  end_latitude,
                                                  end_longitude)
-    return {'distance': np.degrees(distance),
+    return {'distance': distance,
             'azimuth': np.degrees(angle),
             'reverse_azimuth': np.degrees(reverse_angle)}
 
