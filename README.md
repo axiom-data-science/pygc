@@ -52,6 +52,9 @@ great_circle(distance=100000, azimuth=[0, 60, 120, 180, 240, 300], latitude=30, 
 
 
 ### Great Distance
+
+Distance between each pair of points is returned in meters.
+
 ```python
 from pygc import great_distance
 ```
@@ -59,14 +62,14 @@ from pygc import great_distance
 ##### Distance and angle between two points
 ```python
 great_distance(start_latitude=30, start_longitude=-74, end_latitude=40, end_longitude=-74)
-{'azimuth': 0.0, 'distance': 63564833.462465033, 'reverse_azimuth': 180.0}
+{'azimuth': 0.0, 'distance': array(1109415.6324018822), 'reverse_azimuth': 180.0}
 ```
 
 ##### Distance and angle between two sets of points
 ```python
 great_distance(start_latitude=[30, 35], start_longitude=[-74, -79], end_latitude=[40, 45], end_longitude=[-74, -79])
 {'azimuth': array([0., 0.]),
- 'distance': array([63564833.46246503, 63618453.36677702]),
+ 'distance': array([1109415.63240188, 1110351.47627673]),
  'reverse_azimuth': array([180., 180.])}
 ```
 
@@ -74,7 +77,7 @@ great_distance(start_latitude=[30, 35], start_longitude=[-74, -79], end_latitude
 ```python
 great_distance(start_latitude=30, start_longitude=-74, end_latitude=[40, 45, 50], end_longitude=[-74, -74, -74])
 {'azimuth': array([0., 0., 0.]),
- 'distance': array([6.35648335e+07, 9.53877888e+07, 1.27238665e+08]),
+ 'distance': array([1109415.63240188, 1664830.98002662, 2220733.64373152]),
  'reverse_azimuth': array([180., 180., 180.])}
 ```
 
