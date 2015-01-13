@@ -1,7 +1,16 @@
-pygc
-====
+# pygc
 
-Great Circle calculations in Python using Vincenty's formulae
+#### Great Circle calculations in Python using Vincenty's formulae
+
+## Installation
+
+##### Stable
+
+    pip install pygc
+
+##### Development
+
+    pip install git+https://github.com/axiom-data-science/pygc.git
 
 
 ### Great Circle
