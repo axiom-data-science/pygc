@@ -1,4 +1,4 @@
-# pygc
+# pygc  [![Build Status](https://travis-ci.org/axiom-data-science/pygc.svg?branch=master)](https://travis-ci.org/axiom-data-science/pygc)
 
 #### Great Circle calculations in Python using Vincenty's formulae
 
