@@ -1,16 +1,21 @@
 from __future__ import with_statement
 from setuptools import setup, find_packages
-from pygc import __version__
+
 
 def readme():
     with open('README.md') as f:
         return f.read()
 
+def version():
+    with open('VERSION') as f:
+        return f.read().strip()
+
+
 reqs = [line.strip() for line in open('requirements.txt')]
 
 setup(namespace_packages = [],
     name                 = "pygc",
-    version              = __version__,
+    version              = version(),
     description          = "Great Circle calculations in Python using Vincenty's formulae",
     long_description     = readme(),
     license              = 'MIT',
