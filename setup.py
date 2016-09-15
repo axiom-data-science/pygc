@@ -6,6 +6,7 @@ def readme():
     with open('README.md') as f:
         return f.read()
 
+
 def version():
     with open('VERSION') as f:
         return f.read().strip()
@@ -13,24 +14,25 @@ def version():
 
 reqs = [line.strip() for line in open('requirements.txt')]
 
-setup(namespace_packages = [],
+setup(
+    namespace_packages = [],
     name                 = "pygc",
     version              = version(),
     description          = "Great Circle calculations in Python using Vincenty's formulae",
     long_description     = readme(),
     license              = 'MIT',
     author               = "Kyle Wilcox",
-    author_email         = "wilcox.kyle@gmail.com",
+    author_email         = "kyle@axiomdatascience.com",
     url                  = "https://github.com/axiom-data-science/pygc",
     packages             = find_packages(),
     install_requires     = reqs,
     classifiers          = [
-            'Development Status :: 3 - Alpha',
-            'Intended Audience :: Developers',
-            'Intended Audience :: Science/Research',
-            'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
-            'Operating System :: POSIX :: Linux',
-            'Programming Language :: Python',
-            'Topic :: Scientific/Engineering',
-        ],
+        'Development Status :: 5 - Production/Stable',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Topic :: Scientific/Engineering',
+    ],
 )

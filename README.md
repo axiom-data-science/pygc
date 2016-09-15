@@ -1,16 +1,17 @@
 # pygc  [![Build Status](https://travis-ci.org/axiom-data-science/pygc.svg?branch=master)](https://travis-ci.org/axiom-data-science/pygc)
 
-#### Great Circle calculations in Python using Vincenty's formulae
+#### Great Circle calculations for Python 2/3 using Vincenty's formulae
 
 ## Installation
 
-##### Stable
+**pip**
+`pip install pygc`
 
-    pip install pygc
+**conda**
+`conda install -c conda-forge pygc`
 
-##### Development
-
-    pip install git+https://github.com/axiom-data-science/pygc.git
+**development**
+`pip install git+https://github.com/axiom-data-science/pygc.git`
 
 
 ### Great Circle
