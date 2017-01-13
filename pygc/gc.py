@@ -78,7 +78,7 @@ def great_distance(**kwargs):
 
         final_mask = np.logical_not((sy.mask | sx.mask | ey.mask | ex.mask))
         if np.isscalar(final_mask):
-            final_mask = np.asarray([final_mask])
+            final_mask = np.full(sy.size, final_mask, dtype=bool)
         sy = sy[final_mask]
         sx = sx[final_mask]
         ey = ey[final_mask]
