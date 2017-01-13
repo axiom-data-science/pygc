@@ -54,23 +54,60 @@ def great_distance(**kwargs):
 
     """
 
-    start_latitude  = np.radians(kwargs.pop('start_latitude'))
-    start_longitude = np.radians(kwargs.pop('start_longitude'))
-    end_latitude    = np.radians(kwargs.pop('end_latitude'))
-    end_longitude   = np.radians(kwargs.pop('end_longitude'))
-    rmajor          = kwargs.pop('rmajor', 6378137.0)
-    rminor          = kwargs.pop('rminor', 6356752.3142)
-    f               = (rmajor - rminor) / rmajor
+    sy     = kwargs.pop('start_latitude')
+    sx     = kwargs.pop('start_longitude')
+    ey     = kwargs.pop('end_latitude')
+    ex     = kwargs.pop('end_longitude')
+    rmajor = kwargs.pop('rmajor', 6378137.0)
+    rminor = kwargs.pop('rminor', 6356752.3142)
+    f      = (rmajor - rminor) / rmajor
 
     vector_dist = np.vectorize(vinc_dist)
-    distance, angle, reverse_angle = vector_dist(f, rmajor,
-                                                 start_latitude,
-                                                 start_longitude,
-                                                 end_latitude,
-                                                 end_longitude)
-    return {'distance': distance,
-            'azimuth': np.degrees(angle),
-            'reverse_azimuth': np.degrees(reverse_angle)}
+
+    if (np.ma.isMaskedArray(sy) or
+        np.ma.isMaskedArray(sx) or
+        np.ma.isMaskedArray(ey) or
+        np.ma.isMaskedArray(ex)
+       ):
+        try:
+            assert sy.size == sx.size == ey.size == ex.size
+        except AttributeError:
+            raise ValueError("All or none of the inputs should be masked")
+        except AssertionError:
+            raise ValueError("When using masked arrays all must be of equal size")
+
+        final_mask = np.logical_not((sy.mask | sx.mask | ey.mask | ex.mask))
+        if np.isscalar(final_mask):
+            final_mask = np.asarray([final_mask])
+        sy = sy[final_mask]
+        sx = sx[final_mask]
+        ey = ey[final_mask]
+        ex = ex[final_mask]
+
+        tmpd, tmpa, tmpra = vector_dist(f, rmajor,
+                                        np.radians(sy),
+                                        np.radians(sx),
+                                        np.radians(ey),
+                                        np.radians(ex))
+        d = np.ma.masked_all(final_mask.size, dtype=np.float64)
+        d[final_mask] = tmpd
+
+        a = np.ma.masked_all(final_mask.size, dtype=np.float64)
+        a[final_mask] = tmpa
+
+        ra = np.ma.masked_all(final_mask.size, dtype=np.float64)
+        ra[final_mask] = tmpra
+
+    else:
+        d, a, ra = vector_dist(f, rmajor,
+                               np.radians(sy),
+                               np.radians(sx),
+                               np.radians(ey),
+                               np.radians(ex))
+
+    return {'distance': d,
+            'azimuth': np.degrees(a),
+            'reverse_azimuth': np.degrees(ra)}
 
 
 # -----------------------------------------------------------------------
