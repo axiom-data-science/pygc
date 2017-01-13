@@ -1,12 +1,60 @@
 language: python
 python:
-  - "2.6"
   - "2.7"
   - "3.3"
   - "3.4"
   - "3.5"
+
+sudo: false
+
 install:
-  - pip install -r requirements.txt
-  - pip install unittest2
+  # Install miniconda
+  # -----------------
+  - export CONDA_BASE=http://repo.continuum.io/miniconda/Miniconda
+  - if [[ "$TRAVIS_PYTHON_VERSION" == 2* ]]; then
+      wget ${CONDA_BASE}-3.7.0-Linux-x86_64.sh -O miniconda.sh;
+    else
+      wget ${CONDA_BASE}3-3.7.0-Linux-x86_64.sh -O miniconda.sh;
+    fi
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+
+  # Create the basic testing environment
+  # ------------------------------------
+  - conda config --set always_yes yes --set changeps1 no
+  - conda config --set show_channel_urls True
+  - conda config --add create_default_packages pip
+  - conda update --quiet conda
+
+  # Add 3rd party channels
+  # ------------------------------------
+  - conda config --add channels conda-forge
+
+  # Create our environment
+  # ------------------------------------
+  - ENV_NAME='test-environment'
+  - conda create --quiet -n $ENV_NAME python=$TRAVIS_PYTHON_VERSION
+  - source activate $ENV_NAME
+
+  # Install testing requirements
+  # ------------------------------------
+  - conda install --file requirements.txt pytest
+  - conda list --export
+
 script:
   - py.test -s -rxs -v
+  - conda install -n root conda-build anaconda-client
+  - conda build conda-recipe --python $TRAVIS_PYTHON_VERSION
+  - conda install pygc --use-local
+
+after_success:
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_TAG" != "" ]; then
+    anaconda -t $ANACONDA_TOKEN upload --force -u axiom-data-science $HOME/miniconda/**/pygc-*.tar.bz2;
+    fi
+
+deploy:
+  provider: releases
+  api_key:
+    secure: r/hPD5CA/yrXFDOM5dOzXA8sPCg/+/UTdSmfkxRKj19UWHQnHonLo9VTbHFuitC8roWDepdsmZtE7kmetDTyfici5IhD+tjEuEbcvpORJUVzyijUMGhdnrGPnlrm4wQxqJbS0yn//AJMUPTqpn1+T6zQAPkU7RPMCRK3Y3kb7y4=
+  on:
+    tags: true
