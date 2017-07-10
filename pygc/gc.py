@@ -62,13 +62,12 @@ def great_distance(**kwargs):
     rminor = kwargs.pop('rminor', 6356752.3142)
     f      = (rmajor - rminor) / rmajor
 
-    vector_dist = np.vectorize(vinc_dist)
-
     if (np.ma.isMaskedArray(sy) or
         np.ma.isMaskedArray(sx) or
         np.ma.isMaskedArray(ey) or
         np.ma.isMaskedArray(ex)
        ):
+
         try:
             assert sy.size == sx.size == ey.size == ex.size
         except AttributeError:
@@ -84,21 +83,29 @@ def great_distance(**kwargs):
         ey = ey[final_mask]
         ex = ex[final_mask]
 
-        tmpd, tmpa, tmpra = vector_dist(f, rmajor,
-                                        np.radians(sy),
-                                        np.radians(sx),
-                                        np.radians(ey),
-                                        np.radians(ex))
+        if (np.all(sy.mask) or np.all(sx.mask) or np.all(ey.mask) or np.all(ex.mask)) or \
+           (sy.size == 0 or sx.size == 0 or ey.size == 0 or ex.size == 0):
+            vector_dist = np.vectorize(vinc_dist, otypes=[np.float64])
+        else:
+            vector_dist = np.vectorize(vinc_dist)
+
+        results = vector_dist(f, rmajor,
+                              np.radians(sy),
+                              np.radians(sx),
+                              np.radians(ey),
+                              np.radians(ex))
+
         d = np.ma.masked_all(final_mask.size, dtype=np.float64)
-        d[final_mask] = tmpd
-
         a = np.ma.masked_all(final_mask.size, dtype=np.float64)
-        a[final_mask] = tmpa
-
         ra = np.ma.masked_all(final_mask.size, dtype=np.float64)
-        ra[final_mask] = tmpra
+
+        if len(results) == 3:
+            d[final_mask] = results[0]
+            a[final_mask] = results[1]
+            ra[final_mask] = results[2]
 
     else:
+        vector_dist = np.vectorize(vinc_dist)
         d, a, ra = vector_dist(f, rmajor,
                                np.radians(sy),
                                np.radians(sx),
