@@ -4,18 +4,15 @@ python:
   - "3.3"
   - "3.4"
   - "3.5"
+  - "3.6"
 
 sudo: false
 
-install:
+before_install:
   # Install miniconda
   # -----------------
   - export CONDA_BASE=http://repo.continuum.io/miniconda/Miniconda
-  - if [[ "$TRAVIS_PYTHON_VERSION" == 2* ]]; then
-      wget ${CONDA_BASE}-3.7.0-Linux-x86_64.sh -O miniconda.sh;
-    else
-      wget ${CONDA_BASE}3-3.7.0-Linux-x86_64.sh -O miniconda.sh;
-    fi
+  - wget ${CONDA_BASE}3-3.7.0-Linux-x86_64.sh -O miniconda.sh;
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
 
@@ -41,14 +38,17 @@ install:
   - conda install --file requirements.txt pytest
   - conda list --export
 
+# Test source distribution.
+install:
+  - python setup.py sdist && version=$(python setup.py --version) && pushd dist && pip install pygc-${version}.tar.gz && popd
+
 script:
   - py.test -s -rxs -v
-  - conda install -n root conda-build anaconda-client
-  - conda build conda-recipe --python $TRAVIS_PYTHON_VERSION
-  - conda install pygc --use-local
 
 after_success:
   - if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_TAG" != "" ]; then
+    conda install -n root conda-build anaconda-client &&
+    conda build conda-recipe --python $TRAVIS_PYTHON_VERSION &&
     anaconda -t $ANACONDA_TOKEN upload --force -u axiom-data-science $HOME/miniconda/**/pygc-*.tar.bz2;
     fi
 
