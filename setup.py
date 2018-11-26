@@ -20,6 +20,7 @@ setup(
     version              = version(),
     description          = "Great Circle calculations in Python using Vincenty's formulae",
     long_description     = readme(),
+    long_description_content_type='text/markdown',
     license              = 'MIT',
     author               = "Kyle Wilcox",
     author_email         = "kyle@axiomdatascience.com",
