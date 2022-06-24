@@ -1,4 +1,7 @@
-pygc/_version.py
+*.egg*
 *.pyc
-*.egg-info
-dist/*
+.coverage
+.pytest_cache/
+build/
+dist/
+pygc/_version.py
