@@ -1,0 +1,6 @@
+check-manifest
+pre-commit
+pytest
+setuptools_scm
+twine
+wheel
