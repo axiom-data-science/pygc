@@ -1,3 +1,4 @@
+pygc/_version.py
 *.pyc
 *.egg-info
 dist/*
