@@ -1,4 +1,7 @@
 from pygc.gc import great_circle
 from pygc.gc import great_distance
 
-__version__ = "1.2.1"
+try:
+    from ._version import __version__
+except ImportError:
+    __version__ = "unknown"

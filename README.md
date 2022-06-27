@@ -1,8 +1,9 @@
-# pygc  [![Build Status](https://travis-ci.org/axiom-data-science/pygc.svg?branch=master)](https://travis-ci.org/axiom-data-science/pygc)
+# pygc [![Tests](https://github.com/axiom-data-science/pygc/actions/workflows/tests.yml/badge.svg)](https://github.com/axiom-data-science/pygc/actions/workflows/tests.yml)
 
-#### Great Circle calculations for Python 2/3 using Vincenty's formulae
 
-## Installation
+## Great Circle calculations for Python 2/3 using Vincenty's formulae
+
+### Installation
 
 **pip**
 `pip install pygc`
@@ -19,7 +20,7 @@
 from pygc import great_circle
 ```
 
-##### New point from initial point, distance, and azimuth
+#### New point from initial point, distance, and azimuth
 ```python
 great_circle(distance=111000, azimuth=65, latitude=30, longitude=-74)
 {'latitude': 30.41900364921926,
@@ -27,7 +28,7 @@ great_circle(distance=111000, azimuth=65, latitude=30, longitude=-74)
 'reverse_azimuth': 245.52686122611451}
 ```
 
-##### Three new points in three different angles from an initial point
+#### Three new points in three different angles from an initial point
 ```python
 great_circle(distance=[100000, 200000, 300000], azimuth=[90, 180, -90], latitude=30, longitude=-74)
 {'latitude': array([29.99592067, 28.1955554, 29.96329797]),
@@ -35,7 +36,7 @@ great_circle(distance=[100000, 200000, 300000], azimuth=[90, 180, -90], latitude
 'reverse_azimuth': array([270.51817296, 360., 88.44633085])}
 ```
 
-##### Three point south of three initial points (longitude shouldn't change much)
+#### Three point south of three initial points (longitude shouldn't change much)
 ```python
 great_circle(distance=[100000, 200000, 300000], azimuth=180, latitude=30, longitude=[-74, -75, -76])
 {'latitude': array([29.09783841, 28.1955554, 27.29315337]),
@@ -43,7 +44,7 @@ great_circle(distance=[100000, 200000, 300000], azimuth=180, latitude=30, longit
 'reverse_azimuth': array([360., 360., 360.])}
 ```
 
-##### Three point west of three initial points (latitude shouldn't change much)
+#### Three point west of three initial points (latitude shouldn't change much)
 ```python
 great_circle(distance=[100000, 200000, 300000], azimuth=270, latitude=[30, 31, 32], longitude=-74)
 {'latitude': array([ 29.99592067, 30.98302388, 31.96029484]),
@@ -52,7 +53,7 @@ great_circle(distance=[100000, 200000, 300000], azimuth=270, latitude=[30, 31, 3
 ```
 
 
-##### Starburst pattern around a point
+#### Starburst pattern around a point
 ```python
 great_circle(distance=100000, azimuth=[0, 60, 120, 180, 240, 300], latitude=30, longitude=-74)
 {'latitude': array([ 30.90203788, 30.44794729, 29.54590235, 29.09783841, 29.54590235, 30.44794729]),
@@ -69,13 +70,13 @@ Distance between each pair of points is returned in meters.
 from pygc import great_distance
 ```
 
-##### Distance and angle between two points
+#### Distance and angle between two points
 ```python
 great_distance(start_latitude=30, start_longitude=-74, end_latitude=40, end_longitude=-74)
 {'azimuth': 0.0, 'distance': array(1109415.6324018822), 'reverse_azimuth': 180.0}
 ```
 
-##### Distance and angle between two sets of points
+#### Distance and angle between two sets of points
 ```python
 great_distance(start_latitude=[30, 35], start_longitude=[-74, -79], end_latitude=[40, 45], end_longitude=[-74, -79])
 {'azimuth': array([0., 0.]),
@@ -83,7 +84,7 @@ great_distance(start_latitude=[30, 35], start_longitude=[-74, -79], end_latitude
  'reverse_azimuth': array([180., 180.])}
 ```
 
-##### Distance and angle between initial point and three end points
+#### Distance and angle between initial point and three end points
 ```python
 great_distance(start_latitude=30, start_longitude=-74, end_latitude=[40, 45, 50], end_longitude=[-74, -74, -74])
 {'azimuth': array([0., 0., 0.]),
@@ -96,9 +97,7 @@ great_distance(start_latitude=30, start_longitude=-74, end_latitude=[40, 45, 50]
 
 Algrothims from Geocentric Datum of Australia Technical Manual
 
-http://www.anzlic.org.au/icsm/gdatum/chapter4.html (Page is no longer
-available)
-
+https://www.icsm.gov.au/sites/default/files/2017-09/gda-v_2.4_0.pdf
 Computations on the Ellipsoid
 
 There are a number of formulae that are available
