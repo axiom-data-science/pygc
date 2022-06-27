@@ -185,7 +185,7 @@ def vinc_dist(f, a, phi1, lembda1, phi2, lembda2):
     max_loop = 100
     count_loop = 0
     while (last_lembda < -3000000.0 or lembda != 0 and np.absolute((last_lembda - lembda) / lembda) > 1.0e-9):
-        if count_loop>max_loop:
+        if count_loop > max_loop:
             print("max loop reached, break")
             break
         count_loop += 1
