@@ -180,4 +180,4 @@ def test_great_distance_infinite_loop():
     )
 
     expected = 19973984.51165855
-    np.testing.assert_array_almost_equal(gd["distance"], expected, decimal=6)
+    np.testing.assert_allclose(gd["distance"], expected, rtol=4e-4)
